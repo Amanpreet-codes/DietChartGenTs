@@ -46,6 +46,11 @@ def get_mealplan(user_input: InputData):
         return { "meal_plan": result[0]['meal_plan'] }
     return{"meal_plan": None }
 
+
+@app.get("/mealplan/all")
+def get_all_mealplans():
+    return db.all()
+
 @app.post("/mealplan/save")
 
 def save_mealplan(request: MealPlanSaveRequest):
