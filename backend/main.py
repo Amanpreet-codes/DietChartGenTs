@@ -15,10 +15,6 @@ app.add_middleware(
 )
 
 class InputData(BaseModel):
-    age: int
-    gender: str
-    weight: float
-    BMR: float
     goal: str
     goalCals: float
     preference: str
@@ -31,19 +27,14 @@ class MealPlanSaveRequest(BaseModel):
 
 def get_mealplan(user_input: InputData):
     Meal = Query()
-
     result = db.search(
-        (Meal.age == user_input.age) &
-        (Meal.gender == user_input.gender) &
-        (Meal.weight == user_input.weight) &
         (Meal.goal == user_input.goal) &
-        (Meal.BMR == user_input.BMR) &
-        (Meal.goalCals == user_input.goalCals) &
         (Meal.preference == user_input.preference)
     )
-
-    if result:
-        return { "meal_plan": result[0]['meal_plan'] }
+    tolerance = 50
+    for item in result:
+        if abs(item["goalCals"] - user_input.goalCals) <= tolerance:
+            return {"meal_plan": item["meal_plan"]}
     return{"meal_plan": None }
 
 
@@ -55,11 +46,7 @@ def get_all_mealplans():
 
 def save_mealplan(request: MealPlanSaveRequest):
     db.insert({
-        "age": request.inputs.age,
-        "gender": request.inputs.gender,
-        "weight": request.inputs.weight,
         "goal": request.inputs.goal,
-        "BMR": request.inputs.BMR,
         "goalCals": request.inputs.goalCals,
         "preference": request.inputs.preference,
         "meal_plan": request.meal_plan

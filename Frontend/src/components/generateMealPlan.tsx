@@ -12,7 +12,7 @@ export async function generateMealPlan(){
             headers:{
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({age, gender, weight, goal, BMR, goalCals, preference}),
+            body: JSON.stringify({goal, goalCals, preference}),
         });
         
         
@@ -27,8 +27,8 @@ export async function generateMealPlan(){
     }
 
     const prompt = `
-        Generate a realistic 7-day (1 week) Indian meal plan for a ${age}-year-old ${weight}kg ${gender} trying to ${goal}. 
-        Their Calculated BMR IS ${BMR}, and calculated Goal calories are supposed to be ${goalCals}.
+        Generate a realistic 7-day (1 week) Indian meal plan for a person trying to ${goal}. 
+        Their Calculated Goal calories are supposed to be ${goalCals}.
         The user follows a ${preference} diet. Generate a meal plan accordingly.
         Ensure each day's meals are different but nutritionally balanced and high in protein. 
         Don't repeat meals too much but surely keep a balance.
@@ -59,7 +59,7 @@ export async function generateMealPlan(){
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                inputs: {age, gender, weight, goal, BMR, goalCals, preference},
+                inputs: {goal, goalCals, preference},
                 meal_plan: mealPlan,
             }),
         });
