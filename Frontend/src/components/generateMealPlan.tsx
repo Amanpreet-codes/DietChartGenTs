@@ -7,7 +7,7 @@ export async function generateMealPlan(){
     console.log("Sending to backend:", { age, gender, weight, goal, BMR, goalCals, preference });   
     try{
 
-        const response = await fetch("https://dietchartgents.onrender.com/mealplan", {
+        const response = await fetch("http://localhost:8000/mealplan", {
             method:"POST",
             headers:{
                 "Content-Type": "application/json",
@@ -53,14 +53,14 @@ export async function generateMealPlan(){
     const mealPlan = await generateMealPlanFromGemini(prompt);
     
     try{
-        await fetch("https://dietchartgents.onrender.com/mealplan/save", {
+        await fetch("http://localhost:8000/mealplan/save", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 inputs: {goal, goalCals, preference},
-                meal_plan: mealPlan,
+                mealPlan: mealPlan,
             }),
         });
     } catch(e) {
