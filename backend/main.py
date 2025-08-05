@@ -20,7 +20,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://diet-chart-gen-ts.vercel.app"],  # In production, specify your frontend domain
+        "https://diet-chart-gen-ts.vercel.app"],
     allow_credentials=True,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
