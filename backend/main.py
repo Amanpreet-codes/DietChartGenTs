@@ -58,7 +58,6 @@ async def mealPlan(search_data: InputData):
         response = (
             supabase.table("MealPlan")
             .select("*")
-            .eq("goal", search_data.goal)
             .eq("preference", search_data.preference)
             .gte("goal_cals", search_data.goalCals - 100)
             .lte("goal_cals", search_data.goalCals + 100)
